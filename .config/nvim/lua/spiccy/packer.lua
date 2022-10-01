@@ -2,14 +2,36 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function()
-	use 'wbthomason/packer.nvim' -- the Package Manager
-    -- Themes
-    use 'rafamadriz/neon' -- My current Theme
+    -- the Package Manager
+	use 'wbthomason/packer.nvim' 
     
+    -- Configurations for Nvim LSP
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    }
+
+    -- Themes
+    use 'rafamadriz/neon' 
+
     -- Utilities
 	use 'vim-airline/vim-airline' -- The menu at the bottom
+    use {
+        "folke/trouble.nvim",
+        requires= "kyazdani42/nvim-web-devicons",
+        config = function() 
+            require("trouble").setup {
+                -- Configs
+                -- Empty for defaults
+            }
+        end
+    }
+
 	use 'dmerejkowsky/vim-ale' -- Async linter (Will replace)
-	use 'lilydjwg/colorizer' -- Show colors of color codes
+    
+    -- Show colors of color codes
+	use 'lilydjwg/colorizer' 
     
     -- Autocomplete Engine
     use 'ms-jpq/coq_nvim' 
