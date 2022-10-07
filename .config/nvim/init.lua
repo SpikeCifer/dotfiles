@@ -1,1 +1,1 @@
-require("spiccy")
+require("plugins").setup()
