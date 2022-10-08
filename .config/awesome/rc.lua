@@ -63,16 +63,16 @@ modkey = "Mod4"
 awful.layout.layouts = {
     -- awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
+    awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -168,8 +168,13 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
+    -- Set max screens available
+    local max_screens = 10
+    local screens = {}
+    for screen = 1, max_screens do table.insert(screens, screen) end
+
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag(screens, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -181,6 +186,43 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                           
+    -- Create the wibox
+    s.mywibox_top = awful.wibar({ 
+        height = 30,
+        position = "top", 
+        screen = s,
+    })
+
+    local widgets_path = "awesome-wm-widgets"
+    s.docker_widget = require(widgets_path..".docker-widget.docker")
+    s.volume_widget = require(widgets_path..".volume-widget.volume")
+    s.battery_widget = require(widgets_path..".batteryarc-widget.batteryarc")
+
+    -- Add widgets to the wibox
+    s.mywibox_top:setup {
+        layout = wibox.layout.align.horizontal,
+        expand = "none",
+        { -- Left Widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.docker_widget(),
+        },
+        mytextclock, -- Middle Widget
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.battery_widget({ 
+                show_current_level = true,
+                size = 25,
+            }),
+        },
+    }
+
+    -- The bottom menu
+    s.mywibox_bot = awful.wibar({ 
+        position = "bottom", 
+        screen = s 
+    })
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -195,28 +237,16 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
-
-    -- Add widgets to the wibox
-    s.mywibox:setup {
+    -- Add widgets to the bottom menu
+    s.mywibox_bot:setup {
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
-            require("battery-widget") {},
-        },
+        expand = "none",
+
+        s.mytasklist,
+        s.mytaglist,
+        s.mylayoutbox,
     }
+
 end)
 -- }}}
 
@@ -464,47 +494,43 @@ awful.rules.rules = {
     },
 
     -- Floating clients.
-    { rule_any = {
-        instance = {
-          "DTA",  -- Firefox addon DownThemAll.
-          "copyq",  -- Includes session name in class.
-          "pinentry",
-        },
-        class = {
-          "Arandr",
-          "Blueman-manager",
-          "Gpick",
-          "Kruler",
-          "MessageWin",  -- kalarm.
-          "Sxiv",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-          "Wpa_gui",
-          "veromix",
-          "xtightvncviewer"},
+    { 
+        rule_any = {
+            instance = {
+              "DTA",  -- Firefox addon DownThemAll.
+              "copyq",  -- Includes session name in class.
+              "pinentry",
+            },
+            class = {
+              "Arandr",
+              "Blueman-manager",
+              "Gpick",
+              "Kruler",
+              "MessageWin",  -- kalarm.
+              "Sxiv",
+              "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+              "Wpa_gui",
+              "veromix",
+              "xtightvncviewer"},
 
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
-        name = {
-          "Event Tester",  -- xev.
-        },
-        role = {
-          "AlarmWindow",  -- Thunderbird's calendar.
-          "ConfigManager",  -- Thunderbird's about:config.
-          "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-        }
+            -- Note that the name property shown in xprop might be set slightly after creation of the client
+            -- and the name shown there might not match defined rules here.
+            name = {
+              "Event Tester",  -- xev.
+            },
+            role = {
+              "AlarmWindow",  -- Thunderbird's calendar.
+              "ConfigManager",  -- Thunderbird's about:config.
+              "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+            }
       }, properties = { floating = true }},
-
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
-    },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
 }
 -- }}}
-
+      
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
