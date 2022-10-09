@@ -195,9 +195,10 @@ awful.screen.connect_for_each_screen(function(s)
     })
 
     local widgets_path = "awesome-wm-widgets"
-    s.docker_widget = require(widgets_path..".docker-widget.docker")
-    s.volume_widget = require(widgets_path..".volume-widget.volume")
-    s.battery_widget = require(widgets_path..".batteryarc-widget.batteryarc")
+    s.docker_widget = require(widgets_path .. ".docker-widget.docker")
+    s.volume_widget = require(widgets_path .. ".volume-widget.volume")
+    s.battery_widget = require(widgets_path .. ".batteryarc-widget.batteryarc")
+    -- s.todo_widget = require(widgets_path .. ".todo-widget.todo")
 
     -- Add widgets to the wibox
     s.mywibox_top:setup {
@@ -206,6 +207,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left Widgets
             layout = wibox.layout.fixed.horizontal,
             s.docker_widget(),
+            -- s.todo_wdiget(),
         },
         mytextclock, -- Middle Widget
         { -- Right widgets
