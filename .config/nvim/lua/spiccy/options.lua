@@ -16,7 +16,11 @@ local options = {
     -- Search
     hlsearch = true,            -- Highlight all matches on previous search pattern
     ignorecase = true,          -- Ignore case in search patterns
+
+    cursorline = true,
 }
+
+vim.wo.colorcolumn = '80'
 
 for item, value in pairs(options) do
     vim.opt[item] = value

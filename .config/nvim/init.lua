@@ -2,4 +2,4 @@ require "spiccy.options"    -- Could have named the file settings, but since vim
 require "spiccy.plugins"    -- Plugins with Packer Manager
 require "spiccy.colors"     -- Themes
 require "spiccy.complete"   -- Completion Suggestions
--- require "spiccy.lsp"        -- The LSP Cofiguration
+require "spiccy.treesitter" -- Treesitter

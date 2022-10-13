@@ -1,1 +1,1 @@
-vim.cmd[[colorscheme tokyonight]] -- Theme used
+vim.cmd[[colorscheme tokyonight-storm]] -- Theme used
