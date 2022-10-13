@@ -48,10 +48,7 @@ return packer.startup(function(use)
     use "nvim-lua/plenary.nvim"     -- One of the most used APIs
     use "folke/tokyonight.nvim"     -- Current Theme (Consider Transparent?)
 
-    -- The Hard Parts are setting up the TreeSitter, the LSP and anything that
-    -- might use them
-
-    -- Treesitter
+    -- Treesitter(Actually, it was pretty easy to config)
     use {
         "nvim-treesitter/nvim-treesitter",
         event = {"BufReadPre", "BufNewFile"},
@@ -67,6 +64,9 @@ return packer.startup(function(use)
     }
 
     -- LSP
+    use {
+
+    }
 
     -- Completion
     use {
@@ -93,6 +93,13 @@ return packer.startup(function(use)
         end,
     }
 
+    -- Tree File Explorer
+    use {
+        "nvim-tree/nvim-tree.lua",
+        requires = "nvim-tree/nvim-web-devicons",
+        run = ":NvimTreeToggle"
+    }
+
     -- Surround selected text with anything you want
     use {
         "kylechui/nvim-surround",
@@ -100,7 +107,6 @@ return packer.startup(function(use)
             require("nvim-surround").setup()
         end
     }
-
 
     -- Automatically create pairs
     use {

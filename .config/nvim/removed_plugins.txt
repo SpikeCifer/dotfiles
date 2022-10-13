@@ -1,1 +1,1 @@
-coq, ale, indent-blankline, lsp, treesitter, airline, format, colorizer
+ale, indent-blankline, lsp, airline, format, colorizer
