@@ -41,7 +41,7 @@ packer.init {
             return require("packer.util").float { border = "rounded" }
         end,
     },
-}
+} 
 
 return packer.startup(function(use)
     use "wbthomason/packer.nvim"    -- Have packer manage itself
@@ -65,8 +65,18 @@ return packer.startup(function(use)
 
     -- LSP
     use {
-
+        "williamboman/mason.nvim",
+        setup = require("mason").setup()
     }
+
+    use {
+        "williamboman/mason-lspconfig.nvim",
+        setup = require("mason-lspconfig").setup()
+    }
+
+    use "neovim/nvim-lspconfig"
+
+    use "romgrk/barbar.nvim"
 
     -- Completion
     use {
@@ -82,7 +92,7 @@ return packer.startup(function(use)
             "rafamadriz/friendly-snippets",
         },
     }
-    
+
     -- Comment lines
     use {
         "numToStr/Comment.nvim",
@@ -114,6 +124,16 @@ return packer.startup(function(use)
         config = function()
             require("nvim-autopairs").setup()
         end
+    }
+
+    -- Show Linter and other stuff at the bottom
+    use {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function ()
+            require("trouble").setup {}
+        end,
+        run = ":Trouble"
     }
 
     -- Auto set up configuration after cloning packer.nvim (Place it at the end)

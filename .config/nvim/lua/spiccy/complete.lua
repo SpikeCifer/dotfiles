@@ -16,7 +16,7 @@ cmp.setup({
             require("luasnip").lsp_expand(args.body)
         end,
     },
-
+    
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
@@ -35,8 +35,9 @@ cmp.setup({
     sources = cmp.config.sources({
         {name = "nvim_lua"},
         {name = "nvim_lsp"},
-        {name = "path"},
+        {name = "treesitter"},
         {name = "luasnip"},
+        {name = "path"},
         {name = "buffer"},
     }),
 
@@ -44,12 +45,12 @@ cmp.setup({
         format = lspkind.cmp_format({
             with_text = true,
             menu = ({
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
                 nvim_lua = "[api]",
-                path = "[path]",
+                nvim_lsp = "[LSP]",
+                treesitter = "[TS]",
                 luasnip = "[snip]",
                 path = "[path]",
+                buffer = "[Buffer]",
             })
         })
     },
@@ -58,5 +59,3 @@ cmp.setup({
         ghost_text = true, -- Show full word before fully written
     },
 })
-
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())

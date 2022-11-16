@@ -186,18 +186,19 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
-                           
+
     -- Create the wibox
-    s.mywibox_top = awful.wibar({ 
+    s.mywibox_top = awful.wibar({
         height = 30,
-        position = "top", 
+        position = "top",
         screen = s,
     })
 
-    local widgets_path = "awesome-wm-widgets"
-    s.docker_widget = require(widgets_path .. ".docker-widget.docker")
-    s.volume_widget = require(widgets_path .. ".volume-widget.volume")
-    s.battery_widget = require(widgets_path .. ".batteryarc-widget.batteryarc")
+    local widgets_path = "awesome-wm-widgets."
+    s.docker_widget = require(widgets_path .. "docker-widget.docker")
+    s.volume_widget = require(widgets_path .. "volume-widget.volume")
+    s.battery_widget = require(widgets_path .. "batteryarc-widget.batteryarc")
+    s.volume_widget = require(widgets_path .. "volume-widget.volume")
     -- s.todo_widget = require(widgets_path .. ".todo-widget.todo")
 
     -- Add widgets to the wibox
@@ -211,8 +212,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
         mytextclock, -- Middle Widget
         { -- Right widgets
+            -- TODO: Add some space between the widgets
             layout = wibox.layout.fixed.horizontal,
-            s.battery_widget({ 
+
+            s.volume_widget(),
+
+            s.battery_widget({
                 show_current_level = true,
                 size = 25,
             }),
