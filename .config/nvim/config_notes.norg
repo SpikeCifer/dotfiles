@@ -1,0 +1,68 @@
+@document.meta
+title: Configuration Notes
+description: Personal Notes on how to create the best Neovim configuration for me.
+author: Stylianos Zappidis (SpikeCifer)
+@end
+
+A collection of various Neovim frameworks. My goal is to write down what I 
+like and what I don't like about each one of them so that I can build my own 
+*amazing* thing.
+
+* My Choices
+** Thinks I want
+   - LSP for: C, Rust, Zig, Vim, Java, JavaScript, Typescript, Python, Go
+   - Treesitter for: Better text objects (e.g, go to next function/method)
+   - A configurable formatter that performs on save (and is lazy loaded)
+   - Git integration (Have to do some work on this)
+   - Bracket Matching
+ 
+** Things I can't decide on
+   - Autopairs (One the one hand they are not really helpful when using the dot command, on the other your
+you don't have to go searching for a missed bracket.).
+
+** Things I don't want
+   - Additional navigation keybinds that move away from the defaults (Do not alter perfection).
+   - Autowrite, just be responsible.
+
+** Specific plugins
+   - hardtime: Tells me how shitty I am in using vim
+   - gitblame: Lazy loaded, shows author of latest changes
+   - gitsigns: +,-,green lines etc..
+   - Neodev: Better nvim development
+   - toogleterm: Better terminal manipulation
+   - nvim-dap: The standard neovim debugger
+   - neotest: A test framework
+   - NvimTree: A lazy loaded file explorer.
+   - Neorg for handling notes and better markdown features.
+
+** Good Ideas
+   - Using the alt key for a whole set of keymaps.
+   - Autocomands is a cool idea
+   - <A-j/k> For moving lines up/down.
+   - A way to choose between window layouts.
+   - Peek into a function implementation?
+
+* LazyVim
+** Things I like:
+   ~ The dynamic coloring of indentation lines.
+   ~ The notifications menu (as long as it does not impend performance).
+   ~ The splash screen (New file, Restore Session, Config, Quit)
+   ~ <A-j/k> To move lines down/up.
+   ~ Setting Default Window Layouts.
+   ~ An optional file explorer that gets loaded lazily (only when toogled)
+** Things I dislike:
+   ~ The fact that you can not configure the default plugins (Actually you can, 
+     but it easily crashes down)
+   ~ The whole tabs thing. Don't open new tabs every time I click on a new file.
+   ~ All of the keymaps (Like hell man, why would you force your keybinds on another person).
+   ~ The cmdline (Let it be where it belongs; at the bottom of the page, not floating).
+   ~ Autowrite is not for me.
+   ~ Jumping around with additional plugins might seem like a good idea, 
+     until you have to use a remote tool and realize you have forgotten 
+     the vanilla keys.
+
+* TODO:
+  ( ) Learn how to configure the lua line.
+  ( ) Learn how to use the lazy plugin manager.
+  ( ) Learn about other IDE features and consider adding them. 
+  ( ) UFO folding: Don't show numbers, just the classic > ⌄
