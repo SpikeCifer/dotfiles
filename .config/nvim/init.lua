@@ -5,7 +5,8 @@ vim.g.maplocalleader = ','
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 
-local profile = "spiccy"
+-- local profile = "desktop"
+local profile = "desktop"
 
 -- Require configs
 require(profile .. ".options")
